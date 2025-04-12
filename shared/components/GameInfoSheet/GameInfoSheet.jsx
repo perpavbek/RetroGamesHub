@@ -3,6 +3,8 @@ import { View, Image, ScrollView, StyleSheet } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
 import { BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import AddToCart from '../AddToCart/AddToCart';
+import CartService from '../../../data/Services/CartService';
 
 const GameInfoSheet = forwardRef(({ game }, ref) => {
     const theme = useTheme();
@@ -24,7 +26,7 @@ const GameInfoSheet = forwardRef(({ game }, ref) => {
         open: () => bottomSheetRef.current?.present(),
         close: () => bottomSheetRef.current?.dismiss()
       }));
-    if (!game) return null;
+    if (!game) return <BottomSheetModal ref={bottomSheetRef} snapPoints={snapPoints} />;
     return (
         <BottomSheetModal
         ref={bottomSheetRef}
@@ -39,7 +41,7 @@ const GameInfoSheet = forwardRef(({ game }, ref) => {
             backgroundColor: theme.colors.onSurfaceVariant,
         }}
         >
-        <BottomSheetScrollView contentContainerStyle={{ paddingBottom: 32 }}>
+        <BottomSheetScrollView contentContainerStyle={{ width: "100%", paddingBottom: 32, gap: 20 }}>
             <View style={{
                     width: "60%", 
                     aspectRatio: 3/4,
@@ -47,23 +49,24 @@ const GameInfoSheet = forwardRef(({ game }, ref) => {
                     alignSelf: "center",
                 }}>
                     <Image
-                    source={game.cover}
-                    style={{ width: '100%', height: "100%", borderRadius: 12,}}
+                    source={{uri: game.cover}}
+                    style={{ width: '100%', height: "100%", borderRadius: 12}}
                     resizeMode="cover"
                     />
-                </View>
-                <View style={{ padding: 16, }}>
-                    <Text variant="bold" style={[styles.text, { fontSize: 26, marginBottom: 10}]}>{game.title}</Text>
-                    <Text variant="bold" style={[styles.text, styles.infoPoint]}>Release Date: <Text variant="regular" style={styles.text}>{game.date}</Text></Text>
-                    <Text variant="bold" style={[styles.text, styles.infoPoint]}>Rating: 
-                        <Text variant="regular" style={styles.text}>
-                            {` ${game.rating}`}
-                        </Text>
-                        <Icon name="star" color={theme.colors.onSurface} size={16}/>
+            </View>
+            <AddToCart goodId={game.id} onAddToCart={(quantity) => {CartService.addToCart(game.id, quantity); bottomSheetRef.current?.dismiss()}}/>
+            <View style={{ padding: 16, paddingTop: 0 }}>
+                <Text variant="bold" style={[styles.text, { fontSize: 26}]}>{game.title}</Text>
+                <Text variant="bold" style={[styles.text, styles.infoPoint]}>Release Date: <Text variant="regular" style={styles.text}>{game.date.toDate().toLocaleDateString()}</Text></Text>
+                <Text variant="bold" style={[styles.text, styles.infoPoint]}>Rating: 
+                    <Text variant="regular" style={styles.text}>
+                        {` ${game.rating}`}
                     </Text>
-                    <Text variant="bold" style={styles.pointHeader}>Description:</Text>
-                    <Text variant="regular" style={{fontSize: 16}}>{game.description}</Text>
-                </View>
+                    <Icon name="star" color={theme.colors.onSurface} size={16}/>
+                </Text>
+                <Text variant="bold" style={styles.pointHeader}>Description:</Text>
+                <Text variant="regular" style={{fontSize: 16}}>{game.description}</Text>
+            </View>
         </BottomSheetScrollView>
         </BottomSheetModal>
     );

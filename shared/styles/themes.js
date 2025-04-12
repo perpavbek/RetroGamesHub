@@ -7,6 +7,7 @@ export const LightTheme = {
   colors: {
     ...MD3LightTheme.colors,
     primary: baseColor,
+    onPrimary: "#ffffff",
     background: '#ffffff',
     surface: '#f6fffd',
     secondaryContainer: "#b4f5e7",
@@ -30,7 +31,7 @@ export const DarkTheme = {
     background: '#121212',
     surface: '#0a1412',
     secondaryContainer: "#003025",
-    onPrimary: "#FFFFFF",
+    onPrimary: "#001f18",
     onSurfaceVariant: "#739f95",
     onSurface: '#00c89c',
   },

@@ -16,7 +16,7 @@ export default function GameScrollCard({cardInfo, ...props}){
             overflow: "hidden",
             backgroundColor: theme.colors.surface}}
         >
-            <Image source={cardInfo.cover} resizeMode="cover" style={{height: "100%", width: "100%", flex: 0.8}}/>
+            <Image source={{uri: cardInfo.cover}} resizeMode="cover" style={{height: "100%", width: "100%", flex: 0.8}}/>
             <View style={{width: 150, flex: 0.2, alignItems: "flex-start", justifyContent: "center", alignSelf: "center"}}>
                 <Text variant="bold" style={{fontSize: 18, color: theme.colors.onSurface}}>{cardInfo.title}</Text>
             </View>

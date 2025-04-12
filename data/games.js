@@ -5,6 +5,7 @@ export const games = [
       platform: "NES",
       rating: 4.7,
       date: 1991,
+      cost: 10,
       description: "Super Mario Bros (1985) is a legendary platformer that launched the Mario franchise. Join Mario on a quest through the Mushroom Kingdom to rescue Princess Toadstool from Bowser. With iconic level design, power-ups, and timeless gameplay, it defined an entire generation of gaming.",
       cover: require("../assets/covers/SuperMarioBros.jpg"),
     }, 
