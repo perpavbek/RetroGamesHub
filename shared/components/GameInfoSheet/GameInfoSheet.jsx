@@ -64,6 +64,7 @@ const GameInfoSheet = forwardRef(({ game }, ref) => {
                     </Text>
                     <Icon name="star" color={theme.colors.onSurface} size={16}/>
                 </Text>
+                <Text variant="bold" style={[styles.text, styles.infoPoint]}>Price: <Text variant="regular" style={styles.text}>{game.price}₸</Text></Text>
                 <Text variant="bold" style={styles.pointHeader}>Description:</Text>
                 <Text variant="regular" style={{fontSize: 16}}>{game.description}</Text>
             </View>

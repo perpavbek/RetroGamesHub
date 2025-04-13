@@ -70,7 +70,28 @@ import {
         console.error('Game deleting error:', error);
         throw error;
       }
-    }
+    },
+
+    async getGamesByIds(ids = []) {
+      try {
+        if (!Array.isArray(ids) || ids.length === 0) return [];
+  
+        const gamePromises = ids.map(async (id) => {
+          const ref = doc(db, "games", String(id));
+          const snap = await getDoc(ref);
+          if (snap.exists()) {
+            return { id: snap.id, ...snap.data() };
+          }
+          return null;
+        });
+  
+        const results = await Promise.all(gamePromises);
+        return results.filter((game) => game !== null);
+      } catch (error) {
+        console.error('Error fetching games by IDs:', error);
+        throw new Error('Failed to load games');
+      }
+    },
   };
   
   export default GameService;

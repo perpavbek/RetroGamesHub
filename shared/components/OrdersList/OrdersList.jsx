@@ -1,18 +1,18 @@
 import { FlatList, View } from "react-native";
-import CartListCard from "../CartListCard/CartlistCard";
+import OrderListCard from "../OrderListCard/OrderListCard";
 
-export default function CartGoodsList({goods, onCartRemove}){
+export default function OrdersList({orders}){
     return(
         <View style={{
             width: "100%",
             alignItems: "stretch",
         }}>
             <FlatList
-            data={goods}
-            keyExtractor={(item) => item.gameId}
+            data={orders}
+            keyExtractor={(item) => item.id}
             horizontal
             renderItem={({ item }) => (
-                <CartListCard good={item} onCartRemove={onCartRemove}/>
+                <OrderListCard order={item}/>
             )}
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{flexDirection: "column", alignItems: "stretch", width: "100%", gap: 15}}

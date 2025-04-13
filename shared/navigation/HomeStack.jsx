@@ -2,7 +2,6 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import ShopInfoScreen from "../screens/ShopInfoScreen/ShopInfoScreen";
-import { useTheme } from 'react-native-paper';
 import useHeaderStyles from "../hooks/stackHeaderStyles"
 
 const Stack = createStackNavigator();

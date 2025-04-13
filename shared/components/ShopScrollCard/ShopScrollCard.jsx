@@ -16,7 +16,7 @@ export default function ShopScrollCard({ shopInfo, ...props}){
             borderRadius: 10,
             overflow: "hidden",
             backgroundColor: theme.colors.surface}}>
-            <Image source={shopInfo.image} resizeMode="cover" style={{height: "100%", width: "100%", flex: 0.8}}/>
+            <Image source={{uri: shopInfo.image}} resizeMode="cover" style={{height: "100%", width: "100%", flex: 0.8}}/>
             <View style={{width: 220, flex: 0.3, alignItems: "flex-start", justifyContent: "center", alignSelf: "center"}}>
                 <Text variant="bold" style={{fontSize: 18, color: theme.colors.onSurface}}>{shopInfo.title}</Text>
             </View>

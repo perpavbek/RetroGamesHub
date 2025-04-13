@@ -27,7 +27,7 @@ export default function AddToCart({onAddToCart}){
                     <Icon name="plus" color={theme.colors.primary} size={26}/>
                 </Pressable>
             </View>
-            <Pressable onPress={async () => await onAddToCart(quantity)}>
+            <Pressable android_ripple={{ color: theme.colors.secondary }} onPress={async () => await onAddToCart(quantity)}>
                 <Text variant="bold" style={{fontSize: 12, color: theme.colors.onPrimary, backgroundColor: theme.colors.primary, paddingVertical: 8, paddingHorizontal: 15, borderRadius: 20}}>Add to Cart</Text>
             </Pressable>
         </View>

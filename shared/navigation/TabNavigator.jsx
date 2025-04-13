@@ -39,7 +39,7 @@ export default function TabNavigator({}) {
             component={MyGamesStack}
             options={{
             tabBarLabel: 'My Games',
-            tabBarIcon: ({ color }) => <Icon name="animation" color={color} size={20} />,
+            tabBarIcon: ({ color }) => <Icon name="heart" color={color} size={20} />,
             }}
         />
         <Tab.Screen

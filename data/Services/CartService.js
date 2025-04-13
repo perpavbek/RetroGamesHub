@@ -8,7 +8,7 @@ import {
     serverTimestamp,
   } from 'firebase/firestore';
   import { db } from '../../config/firebaseConfig';
-  
+  import GameService from './GameService';
   const CartService = {
     async addToCart(gameId, quantity = 1) {
       try {
@@ -27,18 +27,31 @@ import {
     async getUserCart(userId = "eXBDOneb9LyAtmcMBeIi") {
       try {
         const cartSnapshot = await getDocs(collection(db, 'users', userId, 'cart'));
-        return cartSnapshot.docs.map((doc) => ({
-          gameId: doc.id,
-          ...doc.data(),
-        }));
+        const cartItems = await Promise.all(
+          cartSnapshot.docs.map(async (doc) => {
+            const gameId = doc.id;
+            const cartData = doc.data();
+  
+            const game = await GameService.getGameById(gameId);
+  
+            return {
+              gameId,
+              quantity: cartData.quantity || 1,
+              ...game,
+            };
+          })
+        );
+  
+        return cartItems;
       } catch (error) {
         console.error('Cart getting error:', error);
         throw error;
       }
     },
   
-    async removeFromCart(userId = "eXBDOneb9LyAtmcMBeIi", gameId) {
+    async removeFromCart(gameId) {
       try {
+        const userId = "eXBDOneb9LyAtmcMBeIi";
         const cartRef = doc(db, 'users', userId, 'cart', gameId);
         await deleteDoc(cartRef);
       } catch (error) {
@@ -59,8 +72,9 @@ import {
       }
     },
   
-    async clearCart(userId = "eXBDOneb9LyAtmcMBeIi") {
+    async clearCart() {
       try {
+        const userId = "eXBDOneb9LyAtmcMBeIi";
         const cartSnapshot = await getDocs(collection(db, 'users', userId, 'cart'));
         const deletePromises = cartSnapshot.docs.map((doc) =>
           deleteDoc(doc.ref)
