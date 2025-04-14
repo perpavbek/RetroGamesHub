@@ -1,18 +1,71 @@
-import { useEffect, useState } from "react";
-import { Pressable, View } from "react-native";
-import { Text, useTheme } from "react-native-paper";
+import React from 'react';
+import { View, StyleSheet } from 'react-native';
+import { Text, useTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import GameService from "../../../data/Services/GameService";
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 
-export default function CartListCard({good, onCartRemove}){
-    const theme = useTheme();
-    return(
-        <View style={{flexDirection: "row", justifyContent: "space-between", width: "100%", alignItems: "center", paddingHorizontal: 15, paddingVertical: 20, borderRadius: 15, backgroundColor: theme.colors.surface, gap: 10}}>
-            <Text variant="bold" style={{flex: 0.1, textAlign: "center", paddingHorizontal: 5, paddingVertical: 8, borderRadius: 8, backgroundColor: theme.colors.secondaryContainer}}>x{good.quantity}</Text>
-            <Text variant="bold" style={{flex: 0.8, fontSize: 12}} numberOfLines={1}>{good.title}</Text>
-            <Pressable android_ripple={{ color: theme.colors.secondary }} onPress={() => onCartRemove(good.gameId)} style={{backgroundColor: theme.colors.primary, padding: 6, borderRadius: 8}}>
-                <Icon name="cart-remove" size={24} color={theme.colors.onPrimary}/>
-            </Pressable>
+export default function CartListCard({ good, onCartRemove }) {
+  const theme = useTheme();
+
+  const renderLeftActions = () => (
+    <View style={[styles.actionContainer, { backgroundColor: theme.colors.error }]}>
+      <Icon name="cart-remove" size={24} color={theme.colors.onError} />
+    </View>
+  );
+
+  return (
+    <GestureHandlerRootView>
+      <Swipeable
+        renderLeftActions={renderLeftActions}
+        onSwipeableLeftOpen={() => onCartRemove(good.gameId)}
+      >
+        <View style={[styles.card, { backgroundColor: theme.colors.surface }]}>
+          <Text variant="bold" style={[styles.quantity, { backgroundColor: theme.colors.secondaryContainer }]}>
+            x{good.quantity}
+          </Text>
+          <Text variant="bold" style={styles.title} numberOfLines={1}>
+            {good.title}
+          </Text>
+          <Icon
+            name="cart-remove"
+            size={24}
+            color={theme.colors.onPrimary}
+            onPress={() => onCartRemove(good.gameId)}
+            style={[styles.icon, { backgroundColor: theme.colors.primary }]}
+          />
         </View>
-    );
+      </Swipeable>
+    </GestureHandlerRootView>
+  );
 }
+
+const styles = StyleSheet.create({
+  card: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+    borderRadius: 8,
+    marginVertical: 4,
+  },
+  quantity: {
+    padding: 8,
+    borderRadius: 4,
+    marginRight: 8,
+  },
+  title: {
+    flex: 1,
+    fontSize: 16,
+  },
+  icon: {
+    padding: 8,
+    borderRadius: 4,
+  },
+  actionContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 64,
+    marginVertical: 4,
+    borderRadius: 8,
+  },
+});

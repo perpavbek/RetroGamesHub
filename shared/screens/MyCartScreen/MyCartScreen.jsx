@@ -27,6 +27,7 @@ export default function MyCartScreen() {
       loadOrders();
     });
     async function handleCartRemove(id) {
+      setGoods(goods.filter((item) => item.id !== id));
       await CartService.removeFromCart(id);
       await loadCart();
     }
