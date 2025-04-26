@@ -7,6 +7,7 @@ import GamesList from "../../components/GamesList/GamesList";
 import GameInfoSheet from "../../components/GameInfoSheet/GameInfoSheet";
 import MapWidget from "../../components/MapWidget/MapWidget";
 import GameService from "../../../data/Services/GameService";
+import { mapShopToMarker } from "../../../data/mappers/mapShopToMarker";
 export default function ShopInfoScreen() {
     const route = useRoute();
     const theme = useTheme();
@@ -60,12 +61,7 @@ export default function ShopInfoScreen() {
                     <Text variant="regular" style={{fontSize: 16}}>{shopInfo.description}</Text>
                     <Text variant="bold" style={styles.pointHeader}>Location:</Text>
                     <MapWidget
-                        marker={{
-                            latitude: shopInfo.coordinates.latitude, 
-                            longitude: shopInfo.coordinates.longitude,
-                            title: shopInfo.title,
-                            description: shopInfo.address,
-                        }}
+                        markers={[mapShopToMarker(shopInfo)]}
                     />
                     <Text variant="bold" style={styles.pointHeader}>Available games:</Text>
                     <GamesList data={shopGames} onCardPress={handleCardPress}/>
